@@ -150,10 +150,11 @@ func ReadConfig() error {
 		Conf.Event.EmailQueueProcessingDelay = 10
 	}
 
-	// Warn if the email queue directory isn't set in the config file
-	if Conf.Event.EmailQueueDir == "" {
-		log.Printf("WARN: Email queue directory isn't set in the config file. Defaulting to /tmp.")
-		Conf.Event.EmailQueueDir = "/tmp"
+	// Warn if the SMTP2Go API key isn't in the config file
+	if Conf.Event.Smtp2GoKey == "" {
+		log.Printf("WARN: SMTP2Go API key isn't set in the config file.  Event emails won't be sent.")
+	} else {
+		os.Setenv("SMTP2GO_API_KEY", Conf.Event.Smtp2GoKey)
 	}
 
 	// Set the PostgreSQL configuration values

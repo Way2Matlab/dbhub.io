@@ -14,9 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hectane/hectane/email"
-	"github.com/hectane/hectane/queue"
 	"github.com/jackc/pgx"
+	smtp2go "github.com/smtp2go-oss/smtp2go-go"
 	gfm "github.com/sqlitebrowser/github_flavored_markdown"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -2866,18 +2865,10 @@ func SaveDBSettings(userName, dbFolder, dbName, oneLineDesc, fullDesc, defaultTa
 
 // SendEmails sends status update emails to people watching databases
 func SendEmails() {
-	// Create Hectane email queue
-	cfg := &queue.Config{
-		Directory:              Conf.Event.EmailQueueDir,
-		DisableSSLVerification: true,
-	}
-	q, err := queue.NewQueue(cfg)
-	if err != nil {
-		log.Printf("Couldn't start Hectane queue: %s", err.Error())
+	// If the SMTP2Go email key hasn't been configured, there's no use in trying to send emails
+	if Conf.Event.Smtp2GoKey == "" {
 		return
 	}
-	log.Printf("Created Hectane email queue in '%s'.  Queue processing loop refreshes every %d seconds",
-		Conf.Event.EmailQueueDir, Conf.Event.EmailQueueProcessingDelay)
 
 	for {
 		// Retrieve unsent emails from the email_queue
@@ -2911,22 +2902,22 @@ func SendEmails() {
 
 		// Send emails
 		for _, j := range emailList {
-			e := &email.Email{
-				From:    "updates@dbhub.io",
-				To:      []string{j.Address},
-				Subject: j.Subject,
-				Text:    j.Body,
-			}
-			msgs, err := e.Messages(q.Storage)
-			if err != nil {
-				log.Printf("Queuing email in Hectane failed: %v", err.Error())
-				return // Abort, as we don't want to continuously resend the same emails
-			}
-			for _, m := range msgs {
-				q.Deliver(m)
-			}
 
-			// Mark message as sent
+			// TODO: Figure out why this seems to be sending some emails to a blank address
+			e := smtp2go.Email{
+				From:     "updates@dbhub.io",
+				To:       []string{j.Address},
+				Subject:  j.Subject,
+				TextBody: j.Body,
+				HtmlBody: j.Body,
+			}
+			_, err = smtp2go.Send(&e)
+			if err != nil {
+				log.Println(err)
+			}
+			log.Printf("Verification email sent to '%v'\n", j.Address)
+
+			// We only attempt delivery via smtp2go once (retries are handled on their end), so mark message as sent
 			dbQuery := `
 				UPDATE email_queue
 				SET sent = true, sent_timestamp = now()

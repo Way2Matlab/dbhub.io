@@ -3,7 +3,6 @@
 github.com/BurntSushi/toml
 # github.com/Freeaqingme/dkim v0.0.0-20160606200812-57418d2fbdcd
 ## explicit
-github.com/Freeaqingme/dkim
 # github.com/NYTimes/gziphandler v1.1.1
 ## explicit
 github.com/NYTimes/gziphandler
@@ -34,7 +33,6 @@ github.com/go-playground/validator/v10
 github.com/golang/protobuf/proto
 # github.com/google/uuid v1.1.1
 ## explicit
-github.com/google/uuid
 # github.com/gorilla/css v1.0.0
 github.com/gorilla/css/scanner
 # github.com/gorilla/securecookie v1.1.1
@@ -52,11 +50,8 @@ github.com/gwenn/yacr
 ## explicit
 # github.com/hectane/go-nonblockingchan v0.1.0
 ## explicit
-github.com/hectane/go-nonblockingchan
 # github.com/hectane/hectane v0.3.2
 ## explicit
-github.com/hectane/hectane/email
-github.com/hectane/hectane/queue
 # github.com/jackc/fake v0.0.0-20150926172116-812a484cc733
 ## explicit
 # github.com/jackc/pgx v2.11.0+incompatible
@@ -64,9 +59,6 @@ github.com/hectane/hectane/queue
 github.com/jackc/pgx
 # github.com/kennygrant/sanitize v1.2.4
 ## explicit
-github.com/kennygrant/sanitize
-# github.com/konsorten/go-windows-terminal-sequences v1.0.3
-github.com/konsorten/go-windows-terminal-sequences
 # github.com/leodido/go-urn v1.2.0
 github.com/leodido/go-urn
 # github.com/mattn/go-colorable v0.1.6
@@ -90,7 +82,6 @@ github.com/minio/minio-go/pkg/set
 github.com/mitchellh/go-homedir
 # github.com/pborman/uuid v1.2.0
 ## explicit
-github.com/pborman/uuid
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
@@ -124,9 +115,11 @@ github.com/shurcooL/octicon
 github.com/shurcooL/sanitized_anchor_name
 # github.com/sirupsen/logrus v1.6.0
 ## explicit
-github.com/sirupsen/logrus
 # github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337
 ## explicit
+# github.com/smtp2go-oss/smtp2go-go v1.0.1
+## explicit
+github.com/smtp2go-oss/smtp2go-go
 # github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d
 ## explicit
 github.com/sourcegraph/annotate
@@ -159,8 +152,6 @@ golang.org/x/oauth2
 golang.org/x/oauth2/internal
 # golang.org/x/sys v0.0.0-20210423082822-04245dca01da
 golang.org/x/sys/cpu
-golang.org/x/sys/internal/unsafeheader
-golang.org/x/sys/unix
 # golang.org/x/text v0.3.6
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
