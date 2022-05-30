@@ -3199,7 +3199,12 @@ func StatusUpdatesLoop() {
 					log.Printf("Unknown message type when creating email message")
 				}
 				if eml.Valid {
-					// TODO: Check if the email is username@thisserver, which indicates a non-functional email address
+					// If the email address is of the form username@this_server (which indicates a non-functional email address), then skip it
+					if strings.HasSuffix(eml.String, Conf.Web.ServerName) {
+						continue
+					}
+
+					// Add the email to the queue
 					dbQuery = `
 						INSERT INTO email_queue (mail_to, subject, body)
 						VALUES ($1, $2, $3)`
