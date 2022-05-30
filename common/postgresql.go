@@ -2902,8 +2902,6 @@ func SendEmails() {
 
 		// Send emails
 		for _, j := range emailList {
-
-			// TODO: Figure out why this seems to be sending some emails to a blank address
 			e := smtp2go.Email{
 				From:     "updates@dbhub.io",
 				To:       []string{j.Address},
